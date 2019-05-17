@@ -12,7 +12,7 @@ function get(name, key) {
 
 
 function get_date() {
-	return pattern.exec(new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"})).toLocaleString())[0];
+	return pattern.exec(new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"}))[0];
 }
 
 
@@ -30,7 +30,50 @@ function draw(items) {
 		var carb = item['carb'];
 		var fat = item['fat'];
 		var protein = item['protein'];
-		var html = '<div class="card"> <div class="card-title">' +  food + '</div> <div class="close" onclick="remove(this)">x</div> <table> <tr> <div class="nutri"> <td>Carb:</td> <td style="padding-right: 0;"> <div class="cal">' + carb + '</div> </td> <td style="text-align: left;"><span class="addon">calories</span></td> </div> </tr> <tr> <div class="nutri"> <td>Fat:</td> <td style="padding-right: 0;"> <div class="cal">' + fat + '</div> </td> <td style="text-align: left;"><span class="addon">calories</span></td> </div> </tr> <tr> <div class="nutri"> <td>Proteins:</td> <td style="padding-right: 0;"> <div class="cal">' + protein + '</div> </td> <td style="text-align: left;"><span class="addon">calories</span></td> </div> </tr> </table> <div class="date"> <span>Date:</span> <span>' + get_date() + '</span> </div> </div>';
+		var date = item['date'];
+		var html = '<div class="card"> \
+						<div class="card-title">' +  food + '</div> \
+						<div class="close" onclick="remove(this)">x</div> \
+						<table> \
+							<tr> \
+								<div class="nutri"> \
+									<td>Carb:</td> \
+									<td style="padding-right: 0;"> \
+										<div class="cal">' + carb + '</div> \
+									</td> \
+									<td style="text-align: left;"> \
+										<span class="addon">calories</span> \
+									</td> \
+								</div> \
+							</tr> \
+							<tr> \
+								<div class="nutri"> \
+									<td>Fat:</td> \
+									<td style="padding-right: 0;"> \
+										<div class="cal">' + fat + '</div> \
+									</td> \
+									<td style="text-align: left;"> \
+										<span class="addon">calories</span> \
+									</td> \
+								</div> \
+							</tr> \
+							<tr> \
+								<div class="nutri"> \
+									<td>Proteins:</td> \
+									<td style="padding-right: 0;"> \
+										<div class="cal">' + protein + '</div> \
+									</td> \
+									<td style="text-align: left;"> \
+										<span class="addon">calories</span> \
+									</td> \
+								</div> \
+							</tr> \
+						</table> \
+						<div class="date"> \
+							<span>Date:</span> \
+							<span>' + date + '</span> \
+						</div> \
+					</div>';
 
 		container.innerHTML += html;
 	}
@@ -45,7 +88,12 @@ function nutri_string() {
 	carbs = get('calories', 'carbs').toFixed(2);
 	proteins = get('calories', 'proteins').toFixed(2);
 
-	var str = 'You have <b>' + fats + '</b> calories of fat, <b>' + carbs + '</b> calories of carbs and <b>'  + proteins + '</b> calories of proteins <br>left to achieve your daily calorific need';
+	var str = 'You have \
+				<b>' + fats + '</b> calories of fat, \
+				<b>' + carbs + '</b> calories of carbs and \
+				<b>'  + proteins + '</b> calories of proteins \
+				<br>left to achieve your daily calorific need';
+
 	document.getElementById('info').innerHTML = str;
 }
 
@@ -111,7 +159,7 @@ function calculate_nutri(button) {
 		'carb': carb.value,
 		'fat': fat.value,
 		'protein': protein.value,
-		'date': get_date()  // get date in YYYY-MM-DD format
+		'date': get_date()
 	}
 
 	items = get('items');
@@ -235,12 +283,6 @@ function check_items(calories) {
 	nutri_string();
 }
 
-function initiate_page() {
-	pattern = new RegExp(/\d+\/\d+\/\d+/);
-	storage = window.localStorage;  // localStorage object
-	check_items();
-}
-
 function remove(close) {
 	// removes an item
 	var nodes = Array.prototype.slice.call(document.getElementsByClassName('close'));  // get all close buttons
@@ -251,4 +293,10 @@ function remove(close) {
 	setTimeout(function() {
 		check_items();
 	}, 500);
+}
+
+function initiate_page() {
+	pattern = new RegExp(/\d+\/\d+\/\d+/);
+	storage = window.localStorage;  // localStorage object
+	check_items();
 }
