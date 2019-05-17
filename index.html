@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<title> Calorie caretaker</title>
+</head>
+<body>
+	<div id="add" onclick="add(this)">+</div>
+	<div id="item">
+		<div class="form">
+			<p style="padding-top: 20px;"> Enter details </p>
+			<table class="form-group">
+				<tr>
+					<td><label for="food">Food</label></td>
+					<td><input type="text" id="food" style="border-radius: 5px; text-align: left;"></td>
+				</tr>
+				<tr>
+					<td><label for="fat">Fat</label></td>
+					<td><input type="number" id="fat"></td>
+					<td style="text-align: left;"><span class="addon">calories</span></td>
+				</tr>
+				<tr>
+					<td><label for="carbs">Carbs</label></td>
+					<td><input type="number" id="carbs"></td>
+					<td style="text-align: left;"><span class="addon">calories</span></td>
+				</tr>
+				<tr>
+					<td><label for="proteins">Proteins</label></td>
+					<td><input type="number" id="proteins"></td>
+					<td style="text-align: left;"><span class="addon">calories</span></td>
+				</tr>
+			</table>
+
+			<button onclick="calculate_nutri(this)" style="margin-bottom: 40px;"> Add </button>
+		</div>
+	</div>
+	<div id="container"></div>
+	<div id="sidebar">
+		<button class="menu" onclick="toggle(this)">Calculate</button>
+ 		<div class="form">
+			<p> Calculate your daily needs </p>
+			<table class="form-group">
+				<tr>
+					<td><label for="age">Age</label></td>
+					<td><input type="number" id="age" value="19"></td>
+					<td style="text-align: left;"><span class="addon">years</span></td>
+				</tr>
+				<tr>
+					<td><label for="height">Height</label></td>
+					<td><input type="number" id="height" value="183"></td>
+					<td style="text-align: left;"><span class="addon">cms</span></td>
+				</tr>
+				<tr>
+					<td><label for="weight">Weight</label></td>
+					<td><input type="number" id="weight" value="70"></td>
+					<td style="text-align: left;"><span class="addon">kgs</span></td>
+				</tr>
+				<tr>
+					<td><label id="gender">Gender</label></td>
+					<td><span class="addon choice clicked" onclick="select(this)" id="5">Male</span></td>
+					<td><span class="addon choice" onclick="select(this)" id="161">Female</span></td>
+				</tr>
+			</table>
+
+			<button onclick="calculate()"> Calculate </button>
+		</div>
+	</div>
+
+	<div id="info"></div>
+	<script type="text/javascript" src="index.js"></script>
+	<script type="text/javascript">
+		initiate_page();
+	</script>
+</body>
+</html>
