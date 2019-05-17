@@ -30,7 +30,7 @@ function draw(items) {
 		var carb = item['carb'];
 		var fat = item['fat'];
 		var protein = item['protein'];
-		var html = '<div class="card"> <div class="card-title">' +  food + '</div> <table> <tr> <div class="nutri"> <td>Carb:</td> <td style="padding-right: 0;"> <div class="cal">' + carb + '</div> </td> <td style="text-align: left;"><span class="addon">calories</span></td> </div> </tr> <tr> <div class="nutri"> <td>Fat:</td> <td style="padding-right: 0;"> <div class="cal">' + fat + '</div> </td> <td style="text-align: left;"><span class="addon">calories</span></td> </div> </tr> <tr> <div class="nutri"> <td>Proteins:</td> <td style="padding-right: 0;"> <div class="cal">' + protein + '</div> </td> <td style="text-align: left;"><span class="addon">calories</span></td> </div> </tr> </table> </div>';
+		var html = '<div class="card"> <div class="card-title">' +  food + '</div> <div class="close" onclick="remove(this)">x</div> <table> <tr> <div class="nutri"> <td>Carb:</td> <td style="padding-right: 0;"> <div class="cal">' + carb + '</div> </td> <td style="text-align: left;"><span class="addon">calories</span></td> </div> </tr> <tr> <div class="nutri"> <td>Fat:</td> <td style="padding-right: 0;"> <div class="cal">' + fat + '</div> </td> <td style="text-align: left;"><span class="addon">calories</span></td> </div> </tr> <tr> <div class="nutri"> <td>Proteins:</td> <td style="padding-right: 0;"> <div class="cal">' + protein + '</div> </td> <td style="text-align: left;"><span class="addon">calories</span></td> </div> </tr> </table> <div class="date"> <span>Date:</span> <span>' + get_date() + '</span> </div> </div>';
 
 		container.innerHTML += html;
 	}
@@ -239,4 +239,16 @@ function initiate_page() {
 	pattern = new RegExp(/\d+\/\d+\/\d+/);
 	storage = window.localStorage;  // localStorage object
 	check_items();
+}
+
+function remove(close) {
+	// removes an item
+	var nodes = Array.prototype.slice.call(document.getElementsByClassName('close'));  // get all close buttons
+	close.parentElement.classList.add('clicked');  // add animation
+	items = get('items');
+	items.splice(nodes.indexOf(close), 1);  // remove the item from the array
+	storage.setItem('items', JSON.stringify(items));
+	setTimeout(function() {
+		check_items();
+	}, 500);
 }

@@ -17,18 +17,18 @@
 					<td><input type="text" id="food" style="border-radius: 5px; text-align: left;"></td>
 				</tr>
 				<tr>
-					<td><label for="fat">Fat</label></td>
-					<td><input type="number" id="fat"></td>
+					<td><label for="carbs">Carbs</label></td>
+					<td><input type="number" id="carbs" onkeydown="return event.keyCode !== 69"></td>
 					<td style="text-align: left;"><span class="addon">calories</span></td>
 				</tr>
 				<tr>
-					<td><label for="carbs">Carbs</label></td>
-					<td><input type="number" id="carbs"></td>
+					<td><label for="fat">Fat</label></td>
+					<td><input type="number" id="fat" onkeydown="return event.keyCode !== 69"></td>
 					<td style="text-align: left;"><span class="addon">calories</span></td>
 				</tr>
 				<tr>
 					<td><label for="proteins">Proteins</label></td>
-					<td><input type="number" id="proteins"></td>
+					<td><input type="number" id="proteins" onkeydown="return event.keyCode !== 69"></td>
 					<td style="text-align: left;"><span class="addon">calories</span></td>
 				</tr>
 			</table>
@@ -36,7 +36,51 @@
 			<button onclick="calculate_nutri(this)" style="margin-bottom: 40px;"> Add </button>
 		</div>
 	</div>
-	<div id="container"></div>
+	<div id="container">
+		<!-- <div class="card">
+			<div class="card-title">Burger</div>
+			<div class="close" onclick="remove(this)">x</div>
+			<table>
+				<tr>
+					<div class="nutri">
+						<td>Carb:</td>
+						<td style="padding-right: 0;">
+							<div class="cal">24</div>
+						</td>
+						<td style="text-align: left;">
+							<span class="addon">calories</span>
+						</td>
+					</div>
+				</tr>
+				<tr>
+					<div class="nutri">
+						<td>Fat:</td>
+						<td style="padding-right: 0;">
+							<div class="cal">63</div>
+						</td>
+						<td style="text-align: left;">
+							<span class="addon">calories</span>
+						</td>
+					</div>
+				</tr>
+				<tr>
+					<div class="nutri">
+						<td>Proteins:</td>
+						<td style="padding-right: 0;">
+							<div class="cal">105</div>
+						</td>
+						<td style="text-align: left;">
+							<span class="addon">calories</span>
+						</td>
+					</div>
+				</tr>
+			</table>
+			<div class="date">
+				<span>Date:</span>
+				<span>5/17/2019</span>
+			</div>
+		</div> -->
+	</div>
 	<div id="sidebar">
 		<button class="menu" onclick="toggle(this)">Calculate</button>
  		<div class="form">
