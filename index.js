@@ -12,7 +12,9 @@ function get(name, key) {
 
 
 function get_date() {
-	return pattern.exec(new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"}))[0];
+	var dt = new Date();
+	dt.setTime(dt.getTime() + 19800000);
+	return dt.toISOString().split("T")[0];
 }
 
 
@@ -22,9 +24,7 @@ function draw(items) {
 	var container = document.getElementById('container');
 	container.innerHTML = '';
 
-	var length = items.length;
-		
-	for (i=0; i<length; i++) {
+	for (i=0; i<items.length; i++) {
 		var item = items[i];
 		var food = item['name'];
 		var carb = item['carb'];
@@ -81,18 +81,21 @@ function draw(items) {
 	return items;
 }
 
-function nutri_string() {
+function nutri_string(ex_fats, ex_carbs, ex_proteins) {
 	// updates the info string, which gives info about remaining requirement for the day
+	var ex_carbs = ex_carbs || false;
+	var ex_fats = ex_fats || false;
+	var ex_proteins = ex_proteins || false;
 
-	fats = get('calories', 'fats').toFixed(2);
-	carbs = get('calories', 'carbs').toFixed(2);
-	proteins = get('calories', 'proteins').toFixed(2);
+	var fats = get('calories', 'fats').toFixed(2);
+	var carbs = get('calories', 'carbs').toFixed(2);
+	var proteins = get('calories', 'proteins').toFixed(2);
 
-	var str = 'You have \
-				<b>' + fats + '</b> calories of fat, \
-				<b>' + carbs + '</b> calories of carbs and \
-				<b>'  + proteins + '</b> calories of proteins \
-				<br>left to achieve your daily calorific need';
+	var fat = ' <b' + (ex_fats ? ' class=\"red\"' : '') + '>' + fats + '</b> calories of fat';
+	var carb = ' <b' + (ex_carbs ? ' class=\"red\"' : '') + '>' + carbs + '</b> calories of carbs';
+	var protein = ' <b' + (ex_proteins ? ' class=\"red\"' : '') + '>' + proteins + '</b> calories of proteins';
+
+	var str = 'You have' + fat + carb + protein + '<br>left to achieve your daily calorific need';
 
 	document.getElementById('info').innerHTML = str;
 }
@@ -176,12 +179,8 @@ function calculate_nutri(button) {
 	carb.value = ''
 	protein.value = ''
 
-
-	item = button.parentElement.parentElement;
-	item.classList.remove('open');
-	item.style.display = 'none';
-	document.getElementsByTagName('body')[0].classList.remove('modal');
-	document.getElementById('add').classList.remove('clicked');
+	button = document.getElementById('add');
+	add(button);
 }
 
 function toggle(menu) {
@@ -211,23 +210,27 @@ function add(button) {
 		item.classList.remove('open');
 		document.getElementsByTagName('body')[0].classList.remove('modal');
 		item.style.display = 'none';
+		document.getElementById('container').classList.remove('open');
 	}
 	else {
 		button.classList.add('clicked');
 		item.classList.add('open');
 		document.getElementsByTagName('body')[0].classList.add('modal');
 		item.style.display = 'block';
+		document.getElementById('container').classList.add('open');
 	}
 }
 
 function check_items(calories) {
 
+	var ex_carbs, ex_fats, ex_proteins;
+
 	calories = calories || {
 		// setting default values
 
-		'fats': 535.46,
-		'carbs': 981.67,
-		'proteins': 267.73
+		'fats': 524.63,
+		'carbs': 961.82,
+		'proteins': 262.31
 	};
 
 	items = get('items');
@@ -266,11 +269,8 @@ function check_items(calories) {
 				calories[key] -= item[key.slice(0, -1)];
 
 				if (calories[key] < 0) {
-					items.shift();
-					storage.setItem('items', JSON.stringify(items));
 					alert('Overeating!!! ' + key + ' requirement has exceeded limit');
-					check_items();
-					return;
+					eval("ex_" + key + "= true");
 				}
 			}
 		}
@@ -280,7 +280,7 @@ function check_items(calories) {
 
 	storage.setItem('calories', JSON.stringify(calories));  // add calories object to localStorage
 
-	nutri_string();
+	nutri_string(ex_fats, ex_carbs, ex_proteins);
 }
 
 function remove(close) {

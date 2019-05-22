@@ -8,7 +8,6 @@ body {
 
 body.modal {
 	margin: 0;
-	z-index: -9;
 	overflow-y: hidden;
 }
 
@@ -209,7 +208,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	-webkit-transition: 0.5s;
 	-o-transition: 0.5s;
 	transition: 0.5s;
-	z-index: 9999;
+	z-index: 1;
 }
 
 #add.clicked {
@@ -229,8 +228,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	-o-transition: .5s;
 	transition: .5s;
 	border-radius: 8px;
-	-webkit-box-shadow: 0 0 0 500px #dcdcdc;
-	        box-shadow: 0 0 0 500px #dcdcdc;
+	-webkit-box-shadow: 0 0 0 100vh #dcdcdc;
+	        box-shadow: 0 0 0 100vh #dcdcdc;
 }
 
 @media (max-width: 1300px) {
@@ -288,6 +287,11 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	 	-webkit-transform: scale(1);
 	 	        transform: scale(1);
 	 }
+}
+
+#container.open {
+	position: relative;
+	z-index: -1;
 }
 
 .card {
@@ -371,4 +375,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	margin-top: 10px;
 	margin-left: 10px;
 	border-top: 1px dashed #000;
+}
+
+.red {
+	color: #f73839;
 }
